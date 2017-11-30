@@ -3,6 +3,6 @@
  */
 public class Main {
     public static void main(String [] args){
-        System.out.println("H3ll0 W0rld!!!!");
+        System.out.println("010010000011001101101100011011000011000000100000010101110011000001110010011011000110010000100001001000010010000100100001");
     }
 }
