@@ -29,6 +29,7 @@
    <property name="show_sql">true</property>
 
       <mapping class="entity.ComponentType"/>
+      <mapping class="entity.Component"/>
  <!--
 	<mapping class="ipass.eventapp.entity.Vraag"/>
 	<mapping class="ipass.eventapp.entity.Enquete"/>

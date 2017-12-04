@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by nickw on 30-11-2017.
@@ -16,6 +17,9 @@ public class ComponentType {
 
     @Column(name = "name")
     private String name;
+
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ComponentType")
+//    private List<Component> Components;
 
     public ComponentType() {}
 
