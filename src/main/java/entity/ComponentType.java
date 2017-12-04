@@ -18,9 +18,6 @@ public class ComponentType {
     @Column(name = "name")
     private String name;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ComponentType")
-//    private List<Component> Components;
-
     public ComponentType() {}
 
     public int getId() {
@@ -38,4 +35,5 @@ public class ComponentType {
     public void setName(String name) {
         this.name = name;
     }
+
 }

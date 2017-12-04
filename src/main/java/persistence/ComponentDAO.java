@@ -27,6 +27,7 @@ public class ComponentDAO extends BaseDAO{
             List results = query.list();
             for(Iterator iterator = results.iterator(); iterator.hasNext();){
                 Component component = (Component) iterator.next();
+              //  component.getComponentType();
                 components.add(component);
 
             }

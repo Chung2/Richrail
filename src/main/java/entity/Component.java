@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 @Entity
-@Table(name = "Component")
+@Table(name = "component")
 public class Component {
 
     @Id
@@ -21,15 +21,12 @@ public class Component {
     @Column(name = "seats")
     private int seats;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    //private List<ComponentType> componenttypes;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "componenttype",foreignKey = @ForeignKey(name = "FK_component_componenttype"))
     private ComponentType componentType;
 
 
-    public Component(int seats, ComponentType componentType) {
-        this.seats = seats;
-        this.componentType = componentType;
-    }
+    public Component() {}
 
     public int getId() {
         return id;
@@ -47,11 +44,11 @@ public class Component {
         this.seats = seats;
     }
 
-    public ComponentType getComponenttype() {
+    public ComponentType getComponentType() {
         return componentType;
     }
 
-    public void setComponenttypes(ComponentType componentType) {
+    public void setComponentType(ComponentType componentType) {
         this.componentType = componentType;
     }
 }
