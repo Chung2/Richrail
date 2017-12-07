@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Chung on 03-Dec-17.
  */
-public class ComponentDAO extends BaseDAO{
+public interface ComponentDAO extends BaseDAO{
 
 
 

@@ -13,7 +13,8 @@ import java.util.List;
 /**
  * Created by nickw on 30-11-2017.
  */
-public class ComponentTypeDAO extends BaseDAO {
+public interface ComponentTypeDAO extends BaseDAO<ComponentType> {
 
+    public ComponentType getComponentTypeByName (String name);
 
 }

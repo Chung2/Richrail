@@ -1,10 +1,15 @@
 import entity.Component;
 import entity.ComponentType;
 import entity.Train;
-import models.ServiceProvider;
+//import models.ServiceProvider;
 import org.hibernate.boot.jaxb.SourceType;
 import org.hibernate.cfg.Configuration;
+import persistence.ComponentTypeDAO;
+import persistence.jpa.ComponentTypeDAOJpaImpl;
+import persistence.jpa.HibernateUtil;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.xml.ws.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +18,19 @@ import java.util.List;
  * Created by Chung on 27-Nov-17.
  */
 public class Main {
+
+    private static EntityManagerFactory entityManagerFactory;
+
     public static void main(String [] args){
         System.out.println("Hello develop2");
         System.out.println("010010000011001101101100011011000011000000100000010101110011000001110010011011000110010000100001001000010010000100100001");
-        List<ComponentType> types = ServiceProvider.getComponentTypeService().getAllComponentTypes();
-
-        for (ComponentType type : types) {
-
-            System.out.println(type.getName());
-
-        }
+//        List<ComponentType> types = ServiceProvider.getComponentTypeService().getAllComponentTypes();
+//
+//        for (ComponentType type : types) {
+//
+//            System.out.println(type.getName());
+//
+//        }
 
 //        List<Component> components = ServiceProvider.getComponentService().getAllComponents();
 //        for(Component component : components){
@@ -37,13 +45,13 @@ public class Main {
 //            System.out.println(component.getId() + " " + component.getSeats() + " " + component.getComponentType().getName());
 //        }
 
-        List<Train> trains = ServiceProvider.getTrainService().getAllTrains();
-        for(Train train: trains){
-            System.out.println(train.getId()+" "+train.getName() );
-            for (Component component: train.getComponents()){
-                System.out.println(component.getId()+" "+component.getSeats()+" "+component.getComponentType().getName());
-            }
-        }
+//        List<Train> trains = ServiceProvider.getTrainService().getAllTrains();
+//        for(Train train: trains){
+//            System.out.println(train.getId()+" "+train.getName() );
+//            for (Component component: train.getComponents()){
+//                System.out.println(component.getId()+" "+component.getSeats()+" "+component.getComponentType().getName());
+//            }
+//        }
 
 //        List<Train> trains = ServiceProvider.getTrainService().getAllTrains();
 //        for(Train train : trains) {
@@ -53,6 +61,29 @@ public class Main {
 //            }
 //        }
 
+        EntityManager em = null;
+        try {
+            entityManagerFactory = HibernateUtil.getEntityManagerFactory();
+            em = entityManagerFactory.createEntityManager();
+        } catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+
+        ComponentTypeDAO ctDAO = new ComponentTypeDAOJpaImpl(em);
+
+        em.getTransaction().begin();
+
+        ComponentType ct = ctDAO.findById(1);
+        System.out.println(ct.getId());
+        System.out.println();
+//        for (ComponentType c : ct) {
+//            System.out.println(c.getName());
+//        }
+
+        em.getTransaction().commit();
+
+        em.close();
 
     }
 }

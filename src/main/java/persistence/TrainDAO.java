@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Chung on 04-Dec-17.
  */
-public class TrainDAO extends BaseDAO{
+public interface TrainDAO extends BaseDAO{
 
 
 
