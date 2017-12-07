@@ -73,9 +73,13 @@ public class Main {
         ComponentTypeDAO ctDAO = new ComponentTypeDAOJpaImpl(em);
 
         em.getTransaction().begin();
+//
+//        List<ComponentType> ctl = ctDAO.getAll();
+//        for (ComponentType cttl : ctl) {
+//            System.out.println(ctDAO.getComponentTypeByName(cttl.getName()).getId());
+//        }
 
-        ComponentType ct = ctDAO.findById(1);
-        System.out.println(ct.getId());
+        System.out.println(ctDAO.getComponentTypeByName("lokomotief").getId());
         System.out.println();
 //        for (ComponentType c : ct) {
 //            System.out.println(c.getName());
