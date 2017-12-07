@@ -4,7 +4,9 @@ import entity.Train;
 //import models.ServiceProvider;
 import org.hibernate.boot.jaxb.SourceType;
 import org.hibernate.cfg.Configuration;
+import persistence.ComponentDAO;
 import persistence.ComponentTypeDAO;
+import persistence.jpa.ComponentDAOJpaImpl;
 import persistence.jpa.ComponentTypeDAOJpaImpl;
 import persistence.jpa.HibernateUtil;
 
@@ -70,7 +72,8 @@ public class Main {
             throw new ExceptionInInitializerError(ex);
         }
 
-        ComponentTypeDAO ctDAO = new ComponentTypeDAOJpaImpl(em);
+        ComponentDAO componentDAO = new ComponentDAOJpaImpl(em);
+        //ComponentTypeDAO ctDAO = new ComponentTypeDAOJpaImpl(em);
 
         em.getTransaction().begin();
 //
@@ -79,9 +82,12 @@ public class Main {
 //            System.out.println(ctDAO.getComponentTypeByName(cttl.getName()).getId());
 //        }
 
-        System.out.println(ctDAO.getComponentTypeByName("lokomotief").getId());
-        System.out.println();
-//        for (ComponentType c : ct) {
+        //System.out.println(ctDAO.getComponentTypeByName("lokomotief").getId());
+        //System.out.println(componentDAO.getComponentById(1).getSeats());
+        for (Component component: componentDAO.getComponentsByTrain(1)){
+            System.out.println(component.getTrain().getName()+" "+component.getId() +" "+component.getComponentType().getName());
+        }
+////        for (ComponentType c : ct) {
 //            System.out.println(c.getName());
 //        }
 

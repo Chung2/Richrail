@@ -13,8 +13,11 @@ import java.util.List;
 /**
  * Created by Chung on 03-Dec-17.
  */
-public interface ComponentDAO extends BaseDAO{
+public interface ComponentDAO extends BaseDAO<Component> {
 
+    public List<Component> getComponentsByTrain(int i);
+    public Component getComponentById(int i);
+    public Component getComponentByPre(int i);
 
 
 }

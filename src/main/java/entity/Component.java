@@ -29,6 +29,13 @@ public class Component {
     @JoinColumn(name = "train", nullable = false)
     private Train train;
 
+    @OneToOne
+    @JoinColumn(name="predecessor")
+    private Component component;
+
+    @OneToOne(mappedBy = "component")
+    private Component predecessor;
+
     public Component() {}
 
     public int getId() {
@@ -58,6 +65,22 @@ public class Component {
 //    public void setTrain(Train train) {
 //        this.train = train;
 //    }
+
+    public Train getTrain() {
+        return train;
+    }
+
+    public void setTrain(Train train) {
+        this.train = train;
+    }
+
+    public Component getComponent() {
+        return component;
+    }
+
+    public void setComponent(Component component) {
+        this.component = component;
+    }
 
     public void setComponentType(ComponentType componentType) {
         this.componentType = componentType;
