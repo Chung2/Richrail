@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class Main {
     public static void main(String [] args){
+        System.out.println("Hello develop2");
         System.out.println("010010000011001101101100011011000011000000100000010101110011000001110010011011000110010000100001001000010010000100100001");
         List<ComponentType> types = ServiceProvider.getComponentTypeService().getAllComponentTypes();
 
@@ -41,6 +42,14 @@ public class Main {
             System.out.println(train.getId()+" "+train.getName() );
             for (Component component: train.getComponents()){
                 System.out.println(component.getId()+" "+component.getSeats()+" "+component.getComponentType().getName());
+            }
+        }
+
+        List<Train> trains = ServiceProvider.getTrainService().getAllTrains();
+        for(Train train : trains) {
+            System.out.println(train.getName());
+            for (Component c : train.getComponents()) {
+                System.out.println(c.getId());
             }
         }
 

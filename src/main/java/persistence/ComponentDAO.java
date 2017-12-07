@@ -45,4 +45,18 @@ public class ComponentDAO extends BaseDAO{
         }
         return components;
     }
+
+//    public List<Component> findAll() {
+//        //get session
+//        Session session = getConnection().openSession();
+//        session.beginTransaction();
+//
+//        //Get all component types
+//        List result = session.createQuery("from Component").list();
+//        session.getTransaction().commit();
+//        session.close();
+//
+//        //return list
+//        return result;
+//    }
 }

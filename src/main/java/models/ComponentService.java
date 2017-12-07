@@ -22,4 +22,8 @@ public class ComponentService {
         Query query = session.createQuery("FROM Component");
         return comdao.selectComponent(session,query);
     }
+
+//    public List<Component> getAllComponents(){
+//        return comdao.findAll();
+//    }
 }
