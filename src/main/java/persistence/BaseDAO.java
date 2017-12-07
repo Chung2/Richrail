@@ -1,16 +1,17 @@
 package persistence;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import java.util.List;
 
 /**
  * Created by nickw on 30-11-2017.
  */
 public class BaseDAO {
 
-    private SessionFactory factory = new Configuration().configure().buildSessionFactory();
-
-    protected final SessionFactory getConnection(){
-        return factory;
+    public interface GenericDao<T> {
+        T findById(int id);
+        void update(T entity);
+        void delete(T entity);
+        List<T> getAll();
+        void insert(T entity);
     }
 }

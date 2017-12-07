@@ -45,13 +45,13 @@ public class Main {
             }
         }
 
-        List<Train> trains = ServiceProvider.getTrainService().getAllTrains();
-        for(Train train : trains) {
-            System.out.println(train.getName());
-            for (Component c : train.getComponents()) {
-                System.out.println(c.getId());
-            }
-        }
+//        List<Train> trains = ServiceProvider.getTrainService().getAllTrains();
+//        for(Train train : trains) {
+//            System.out.println(train.getName());
+//            for (Component c : train.getComponents()) {
+//                System.out.println(c.getId());
+//            }
+//        }
 
 
     }

@@ -15,48 +15,6 @@ import java.util.List;
  */
 public class ComponentDAO extends BaseDAO{
 
-    public Session getNewSession(){
-     return super.getConnection().openSession();
-    }
 
-    public List<Component> selectComponent (Session session, Query query){
-        Transaction tx = null;
-        List<Component> components = new ArrayList<Component>();
-        try{
-            tx = session.beginTransaction();
-            List results = query.list();
-            for(Iterator iterator = results.iterator(); iterator.hasNext();){
-                Component component = (Component) iterator.next();
-              //  component.getComponentType();
-                components.add(component);
 
-            }
-            tx.commit();
-        }catch(HibernateException e){
-            if (tx!=null) tx.rollback();
-            e.printStackTrace();
-            session.close();
-            return null;
-        }
-
-        session.close();
-        if(components.isEmpty()){
-            return null;
-        }
-        return components;
-    }
-
-//    public List<Component> findAll() {
-//        //get session
-//        Session session = getConnection().openSession();
-//        session.beginTransaction();
-//
-//        //Get all component types
-//        List result = session.createQuery("from Component").list();
-//        session.getTransaction().commit();
-//        session.close();
-//
-//        //return list
-//        return result;
-//    }
 }
