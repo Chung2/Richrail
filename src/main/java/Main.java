@@ -1,5 +1,6 @@
 import entity.Component;
 import entity.ComponentType;
+import entity.Train;
 import models.ServiceProvider;
 import org.hibernate.boot.jaxb.SourceType;
 import org.hibernate.cfg.Configuration;
@@ -30,9 +31,17 @@ public class Main {
 //            }
 //        }
 
-        List<Component> components = ServiceProvider.getComponentService().getAllComponents();
-        for(Component component : components) {
-            System.out.println(component.getId() + " " + component.getSeats() + " " + component.getComponentType().getName());
+//        List<Component> components = ServiceProvider.getComponentService().getAllComponents();
+//        for(Component component : components) {
+//            System.out.println(component.getId() + " " + component.getSeats() + " " + component.getComponentType().getName());
+//        }
+
+        List<Train> trains = ServiceProvider.getTrainService().getAllTrains();
+        for(Train train: trains){
+            System.out.println(train.getId()+" "+train.getName() );
+            for (Component component: train.getComponents()){
+                System.out.println(component.getId()+" "+component.getSeats()+" "+component.getComponentType().getName());
+            }
         }
 
 

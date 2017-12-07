@@ -19,7 +19,7 @@ public class TrainService {
 
     public List<Train> getAllTrains(){
         Session session = trainDAO.getNewSession();
-        Query query = session.createQuery("FROM train");
+        Query query = session.createQuery("FROM Train");
         return trainDAO.selectTrain(session, query);
     }
 }

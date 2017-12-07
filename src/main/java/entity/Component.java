@@ -25,6 +25,9 @@ public class Component {
     @JoinColumn(name = "componenttype",foreignKey = @ForeignKey(name = "FK_component_componenttype"))
     private ComponentType componentType;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "train", nullable = false)
+    private Train train;
 
     public Component() {}
 
@@ -47,6 +50,14 @@ public class Component {
     public ComponentType getComponentType() {
         return componentType;
     }
+
+//    public Train getTrain() {
+//        return train;
+//    }
+//
+//    public void setTrain(Train train) {
+//        this.train = train;
+//    }
 
     public void setComponentType(ComponentType componentType) {
         this.componentType = componentType;

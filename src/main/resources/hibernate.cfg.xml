@@ -30,6 +30,7 @@
 
       <mapping class="entity.ComponentType"/>
       <mapping class="entity.Component"/>
+      <mapping class="entity.Train"/>
  <!--
 	<mapping class="ipass.eventapp.entity.Vraag"/>
 	<mapping class="ipass.eventapp.entity.Enquete"/>
