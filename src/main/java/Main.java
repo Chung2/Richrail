@@ -84,12 +84,13 @@ public class Main {
 
         //System.out.println(ctDAO.getComponentTypeByName("lokomotief").getId());
         //System.out.println(componentDAO.getComponentById(1).getSeats());
-        for (Component component: componentDAO.getComponentsByTrain(1)){
-            System.out.println(component.getTrain().getName()+" "+component.getId() +" "+component.getComponentType().getName());
-        }
+//        for (Component component: componentDAO.getComponentsByTrain(1)){
+//            System.out.println(component.getTrain().getName()+" "+component.getId() +" "+component.getComponentType().getName());
+//        }
 ////        for (ComponentType c : ct) {
 //            System.out.println(c.getName());
 //        }
+        System.out.println(componentDAO.getComponentByPre(2,1).getPredecessor().getComponentType().getName());
 
         em.getTransaction().commit();
 

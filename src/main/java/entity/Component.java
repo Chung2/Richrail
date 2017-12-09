@@ -31,10 +31,10 @@ public class Component {
 
     @OneToOne
     @JoinColumn(name="predecessor")
-    private Component component;
-
-    @OneToOne(mappedBy = "component")
     private Component predecessor;
+
+    @OneToOne(mappedBy = "predecessor")
+    private Component component;
 
     public Component() {}
 
@@ -80,6 +80,14 @@ public class Component {
 
     public void setComponent(Component component) {
         this.component = component;
+    }
+
+    public Component getPredecessor() {
+        return predecessor;
+    }
+
+    public void setPredecessor(Component predecessor) {
+        this.predecessor = predecessor;
     }
 
     public void setComponentType(ComponentType componentType) {

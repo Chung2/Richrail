@@ -17,7 +17,7 @@ public interface ComponentDAO extends BaseDAO<Component> {
 
     public List<Component> getComponentsByTrain(int i);
     public Component getComponentById(int i);
-    public Component getComponentByPre(int i);
+    public Component getComponentByPre(int i, int trainid);
 
 
 }

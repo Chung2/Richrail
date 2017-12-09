@@ -42,8 +42,8 @@ public class ComponentDAOJpaImpl extends AbstractDaoJpaImpl<Component> implement
         return null;
     }
 
-    public Component getComponentByPre(int i){
-        List<Component> components = (List<Component>) em.createQuery("from Component where train =:i").setParameter(1,i).getResultList();
+    public Component getComponentByPre(int i, int trainid){
+        List<Component> components = (List<Component>) em.createQuery("from Component where id="+i+" and train ="+trainid).getResultList();
         if(!components.isEmpty()){
             return components.get(0);
         }
