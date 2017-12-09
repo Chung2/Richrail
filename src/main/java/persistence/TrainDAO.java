@@ -14,8 +14,7 @@ import java.util.List;
 /**
  * Created by Chung on 04-Dec-17.
  */
-public interface TrainDAO extends BaseDAO{
+public interface TrainDAO extends BaseDAO<Train> {
 
-
-
+    public Train getTrainByName(String name);
 }

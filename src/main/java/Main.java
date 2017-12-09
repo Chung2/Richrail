@@ -6,9 +6,11 @@ import org.hibernate.boot.jaxb.SourceType;
 import org.hibernate.cfg.Configuration;
 import persistence.ComponentDAO;
 import persistence.ComponentTypeDAO;
+import persistence.TrainDAO;
 import persistence.jpa.ComponentDAOJpaImpl;
 import persistence.jpa.ComponentTypeDAOJpaImpl;
 import persistence.jpa.HibernateUtil;
+import persistence.jpa.TrainDAOJpaImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -72,9 +74,9 @@ public class Main {
             throw new ExceptionInInitializerError(ex);
         }
 
-        ComponentDAO componentDAO = new ComponentDAOJpaImpl(em);
+        //ComponentDAO componentDAO = new ComponentDAOJpaImpl(em);
         //ComponentTypeDAO ctDAO = new ComponentTypeDAOJpaImpl(em);
-
+        TrainDAO trainDAO = new TrainDAOJpaImpl(em);
         em.getTransaction().begin();
 //
 //        List<ComponentType> ctl = ctDAO.getAll();
@@ -90,8 +92,11 @@ public class Main {
 ////        for (ComponentType c : ct) {
 //            System.out.println(c.getName());
 //        }
-        System.out.println(componentDAO.getComponentByPre(2,1).getPredecessor().getComponentType().getName());
-
+        //System.out.println(componentDAO.getComponentByPre(2,1).getPredecessor().getComponentType().getName()    );
+        System.out.println(trainDAO.getTrainByName("chocho").getId());
+        for(Component component : trainDAO.getTrainByName("chocho").getComponents()){
+            System.out.println(component.getComponentType().getName());
+        }
         em.getTransaction().commit();
 
         em.close();
