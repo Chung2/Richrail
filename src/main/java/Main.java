@@ -74,8 +74,8 @@ public class Main {
             throw new ExceptionInInitializerError(ex);
         }
 
-        //ComponentDAO componentDAO = new ComponentDAOJpaImpl(em);
-        //ComponentTypeDAO ctDAO = new ComponentTypeDAOJpaImpl(em);
+        ComponentDAO componentDAO = new ComponentDAOJpaImpl(em);
+        ComponentTypeDAO ctDAO = new ComponentTypeDAOJpaImpl(em);
         TrainDAO trainDAO = new TrainDAOJpaImpl(em);
         em.getTransaction().begin();
 //

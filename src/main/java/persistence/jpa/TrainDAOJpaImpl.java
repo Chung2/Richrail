@@ -25,6 +25,7 @@ public class TrainDAOJpaImpl extends AbstractDaoJpaImpl<Train> implements TrainD
         return null;
     }
 
+    // method bestaat al in AbstractDaoJpaImpl (getAll() )
     public List<Train> getAllTrains(){
         List<Train> trains = (List<Train>) em.createQuery("from Train").getResultList();
         if(!trains.isEmpty()){

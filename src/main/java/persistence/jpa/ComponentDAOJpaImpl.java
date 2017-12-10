@@ -24,6 +24,7 @@ public class ComponentDAOJpaImpl extends AbstractDaoJpaImpl<Component> implement
         return null;
     }
 
+    // Bij klasse AbstractDaoJpaImpl zit al de function: findById
     public Component getComponentById(int i){
         List<Component> components = (List<Component>) em.createQuery("from Component where id =:i").setParameter("i",i).getResultList();
         if(!components.isEmpty()){

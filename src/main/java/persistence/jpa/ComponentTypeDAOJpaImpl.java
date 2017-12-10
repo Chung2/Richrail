@@ -16,7 +16,7 @@ public class ComponentTypeDAOJpaImpl extends AbstractDaoJpaImpl<ComponentType> i
     }
 
     @Override
-    public ComponentType getComponentTypeByName(String type) {
+    public ComponentType findByType(String type) {
         System.out.println("INPUT: " + type);
         List<ComponentType> componentTypes = (List<ComponentType>) em.createQuery("from ComponentType where name = :type").setParameter("type", type).getResultList();
 //        Query query =  em.createQuery("from ComponentType where name = :name");

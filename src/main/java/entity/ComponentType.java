@@ -1,6 +1,8 @@
 package entity;
 
+
 import javax.persistence.*;
+import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -19,6 +21,11 @@ public class ComponentType {
     private String name;
 
     public ComponentType() {}
+
+    public ComponentType(int id ,String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public int getId() {
         return id;

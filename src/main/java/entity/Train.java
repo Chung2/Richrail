@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -49,6 +50,7 @@ public class Train {
     public void setComponents(List<Component> components) {
         Components = components;
     }
+
 }
 
 
