@@ -2,6 +2,7 @@ package entity;
 
 import javax.persistence.*;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,10 +20,10 @@ public class Train {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "train")
+    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "train")
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "train")
 //    @JoinColumn (name="train")
-    private List<Component> Components;
+    private List<Component> Components = new ArrayList<Component>();
 
     public Train() {
     }
@@ -48,7 +49,12 @@ public class Train {
     }
 
     public void setComponents(List<Component> components) {
-        Components = components;
+        this.Components = components;
+    }
+
+    public void addComponent(Component component) {
+        component.setTrain(this);
+        this.Components.add(component);
     }
 
 }

@@ -85,8 +85,8 @@ public class Main {
 //        }
 
         //System.out.println(ctDAO.getComponentTypeByName("lokomotief").getId());
-        Component test = componentDAO.getComponentById(1);
-        if (test.equals(componentDAO.getComponentById(1))){
+        Component test = componentDAO.getComponentById(2);
+        if (test.equals(componentDAO.getComponentById(2))){
             System.out.println("goed");
         }
         else{

@@ -31,10 +31,20 @@ public class ComponentTypeService {
     }
 
     public void addComponentType(ComponentType ct) {
+        ServiceProvider.getEntityManager().getTransaction().begin();
         cdao.insert(ct);
+        ServiceProvider.getEntityManager().getTransaction().commit();
+    }
+
+    public void updateComponentType(ComponentType ct) {
+        ServiceProvider.getEntityManager().getTransaction().begin();
+        cdao.update(ct);
+        ServiceProvider.getEntityManager().getTransaction().commit();
     }
 
     public void deleteComponentType(ComponentType ct) {
+        ServiceProvider.getEntityManager().getTransaction().begin();
         cdao.delete(ct);
+        ServiceProvider.getEntityManager().getTransaction().commit();
     }
 }

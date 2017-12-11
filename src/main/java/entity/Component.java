@@ -30,12 +30,8 @@ public class Component {
     @JoinColumn(name = "train", nullable = false)
     private Train train;
 
-    @OneToOne
-    @JoinColumn(name = "predecessor", nullable = true)
-    private Component predecessor;
-
-    @OneToOne(mappedBy = "predecessor")
-    private Component component;
+    @Column(name = "`order`")
+    private int order;
 
     public Component() {
     }
@@ -60,14 +56,6 @@ public class Component {
         return componentType;
     }
 
-//    public Train getTrain() {
-//        return train;
-//    }
-//
-//    public void setTrain(Train train) {
-//        this.train = train;
-//    }
-
     public Train getTrain() {
         return train;
     }
@@ -76,47 +64,16 @@ public class Component {
         this.train = train;
     }
 
-    public Component getComponent() {
-        return component;
-    }
-
-    public void setComponent(Component component) {
-        this.component = component;
-    }
-
-    public Component getPredecessor() {
-        return predecessor;
-    }
-
-    public void setPredecessor(Component predecessor) {
-        this.predecessor = predecessor;
-    }
-
     public void setComponentType(ComponentType componentType) {
         this.componentType = componentType;
     }
 
-    public boolean equals(Object object) {
-        boolean result = false;
-
-        if (object instanceof Component) {
-            Component anderComponent = (Component) object;
-
-            if (((Component) object).predecessor != null || anderComponent.getPredecessor() != null){
-            if (this.componentType.getName().equals(anderComponent.componentType.getName())
-                    && this.predecessor.id == anderComponent.predecessor.id
-                    && this.train.getId() == anderComponent.train.getId()
-                    && this.seats == anderComponent.seats
-                    && this.predecessor.train.getId() == anderComponent.predecessor.train.getId()) {
-                result = true;
-            }
-            }
-            else{
-                System.out.print("voorganger is null");
-            }
-        }
-
-        return result;
+    public int getOrder() {
+        return order;
     }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
+}
 

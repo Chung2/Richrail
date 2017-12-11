@@ -28,4 +28,16 @@ public class ComponentService {
     public List<Component> getComponentsByTrainId(int id) {
         return comdao.getComponentsByTrain(id);
     }
+
+    public void addComponent(Component cp) {
+        ServiceProvider.getEntityManager().getTransaction().begin();
+        comdao.insert(cp);
+        ServiceProvider.getEntityManager().getTransaction().commit();
+    }
+
+    public void updateComponent(Component cp) {
+        ServiceProvider.getEntityManager().getTransaction().begin();
+        comdao.update(cp);
+        ServiceProvider.getEntityManager().getTransaction().commit();
+    }
 }

@@ -28,4 +28,11 @@ public class TrainService {
     public Train getTrainByName(String name){
         return trainDAO.getTrainByName(name);
     }
+
+    public void addTrain(Train train) {
+        ServiceProvider.getEntityManager().getTransaction().begin();
+        trainDAO.insert(train);
+        ServiceProvider.getEntityManager().getTransaction().commit();
+    }
+
 }
