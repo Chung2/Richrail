@@ -85,7 +85,14 @@ public class Main {
 //        }
 
         //System.out.println(ctDAO.getComponentTypeByName("lokomotief").getId());
-        //System.out.println(componentDAO.getComponentById(1).getSeats());
+        Component test = componentDAO.getComponentById(1);
+        if (test.equals(componentDAO.getComponentById(1))){
+            System.out.println("goed");
+        }
+        else{
+            System.out.println("fout");
+        }
+
 //        for (Component component: componentDAO.getComponentsByTrain(1)){
 //            System.out.println(component.getTrain().getName()+" "+component.getId() +" "+component.getComponentType().getName());
 //        }
@@ -93,10 +100,13 @@ public class Main {
 //            System.out.println(c.getName());
 //        }
         //System.out.println(componentDAO.getComponentByPre(2,1).getPredecessor().getComponentType().getName()    );
-        System.out.println(trainDAO.getTrainByName("chocho").getId());
-        for(Component component : trainDAO.getTrainByName("chocho").getComponents()){
-            System.out.println(component.getComponentType().getName());
-        }
+//        System.out.println(trainDAO.getTrainByName("chocho").getId());
+//        for(Component component : trainDAO.getTrainByName("chocho").getComponents()){
+//            System.out.println(component.getPredecessor().getComponentType().getName());
+//        }
+//
+
+
         em.getTransaction().commit();
 
         em.close();

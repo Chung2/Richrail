@@ -23,7 +23,7 @@ public class Component {
     private int seats;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "componenttype",foreignKey = @ForeignKey(name = "FK_component_componenttype"))
+    @JoinColumn(name = "componenttype", foreignKey = @ForeignKey(name = "FK_component_componenttype"))
     private ComponentType componentType;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -31,13 +31,14 @@ public class Component {
     private Train train;
 
     @OneToOne
-    @JoinColumn(name="predecessor")
+    @JoinColumn(name = "predecessor", nullable = true)
     private Component predecessor;
 
     @OneToOne(mappedBy = "predecessor")
     private Component component;
 
-    public Component() {}
+    public Component() {
+    }
 
     public int getId() {
         return id;
@@ -95,4 +96,27 @@ public class Component {
         this.componentType = componentType;
     }
 
-}
+    public boolean equals(Object object) {
+        boolean result = false;
+
+        if (object instanceof Component) {
+            Component anderComponent = (Component) object;
+
+            if (((Component) object).predecessor != null || anderComponent.getPredecessor() != null){
+            if (this.componentType.getName().equals(anderComponent.componentType.getName())
+                    && this.predecessor.id == anderComponent.predecessor.id
+                    && this.train.getId() == anderComponent.train.getId()
+                    && this.seats == anderComponent.seats
+                    && this.predecessor.train.getId() == anderComponent.predecessor.train.getId()) {
+                result = true;
+            }
+            }
+            else{
+                System.out.print("voorganger is null");
+            }
+        }
+
+        return result;
+    }
+    }
+
