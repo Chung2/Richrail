@@ -40,4 +40,10 @@ public class ComponentService {
         comdao.update(cp);
         ServiceProvider.getEntityManager().getTransaction().commit();
     }
+
+    public void deleteComponent(Component cp) {
+        ServiceProvider.getEntityManager().getTransaction().begin();
+        comdao.delete(cp);
+        ServiceProvider.getEntityManager().getTransaction().commit();
+    }
 }

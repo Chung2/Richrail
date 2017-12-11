@@ -35,4 +35,16 @@ public class TrainService {
         ServiceProvider.getEntityManager().getTransaction().commit();
     }
 
+    public void updateTrain(Train train) {
+        ServiceProvider.getEntityManager().getTransaction().begin();
+        trainDAO.update(train);
+        ServiceProvider.getEntityManager().getTransaction().commit();
+    }
+
+    public void deleteTrain(Train train) {
+        ServiceProvider.getEntityManager().getTransaction().begin();
+        trainDAO.delete(train);
+        ServiceProvider.getEntityManager().getTransaction().commit();
+    }
+
 }
