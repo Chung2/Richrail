@@ -30,7 +30,7 @@ public class Component {
     @JoinColumn(name = "train", nullable = false)
     private Train train;
 
-    @Column(name = "`order`")
+    @Column(name = "`order`", nullable = true)
     private int order;
 
     public Component() {
