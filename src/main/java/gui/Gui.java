@@ -20,11 +20,13 @@ public class Gui extends Application{
             primaryStage.setTitle("RichRail");
             primaryStage.setScene(scene);
             primaryStage.show();
+
         }
         catch (IOException e) {
             e.printStackTrace();
-        }
-
+        }}
+        public void test(){
+        System.out.println("hello world!");
     }
 
-}
+    }

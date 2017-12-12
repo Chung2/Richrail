@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Gui">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Gui">
     <children>
         <Pane fx:id="canvas" prefHeight="250.0" prefWidth="600.0" style="-fx-background-color: #FFF;" />
         <Pane fx:id="plebPane" disable="true" layoutY="250.0" prefHeight="250.0" prefWidth="600.0" style="-fx-background-color: #EEE;" visible="false">
@@ -144,7 +144,7 @@
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Button fx:id="executeBtn" layoutX="306.0" layoutY="222.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="execute">
+            <Button fx:id="executeBtn" layoutX="306.0" layoutY="222.0" mnemonicParsing="false" onAction="#test" prefHeight="27.0" prefWidth="60.0" text="execute">
                <font>
                   <Font size="10.0" />
                </font>
