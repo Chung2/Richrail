@@ -12,7 +12,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Gui">
     <children>
         <Pane fx:id="canvas" prefHeight="250.0" prefWidth="600.0" style="-fx-background-color: #FFF;" />
-        <Pane fx:id="plebPane" disable="true" layoutY="250.0" prefHeight="250.0" prefWidth="600.0" style="-fx-background-color: #EEE;" visible="false">
+        <Pane fx:id="plebPane" layoutY="250.0" prefHeight="250.0" prefWidth="600.0" style="-fx-background-color: #EEE;">
             <children>
             <Pane layoutX="14.0" layoutY="14.0">
                <children>
@@ -21,7 +21,7 @@
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                      <Button fx:id="createTrainBtn" layoutX="157.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="99.0" text="make new train">
+                      <Button fx:id="createTrainBtn" layoutX="157.0" mnemonicParsing="false" onAction="#test" prefHeight="27.0" prefWidth="99.0" text="make new train">
                           <font>
                               <Font size="10.0" />
                           </font>
@@ -32,7 +32,7 @@
                               <Font size="10.0" />
                           </font>
                       </Button>
-                      <Button fx:id="deleteTrainBtn" layoutX="157.0" layoutY="89.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="99.0" text="delete train">
+                      <Button fx:id="deleteTrainBtn" disable="true" focusTraversable="false" layoutX="157.0" layoutY="89.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="99.0" text="delete train">
                           <font>
                               <Font size="10.0" />
                           </font>
@@ -127,24 +127,24 @@
             </Pane>
             </children>
         </Pane>
-      <Pane layoutY="200.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #EEE;">
+      <Pane layoutY="200.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #EEE;" visible="false">
          <children>
-            <TextArea fx:id="statusLogger" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="280.0" text="status">
+            <TextArea fx:id="statusLogger" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="280.0" text="status" visible="false">
                <font>
                   <Font size="10.0" />
                </font>
             </TextArea>
-            <TextArea fx:id="commandLogger" editable="false" layoutX="306.0" layoutY="14.0" prefHeight="200.0" prefWidth="280.0" style="-fx-text-fill: #FFF; -fx-control-inner-background: #000;" text="output">
+            <TextArea fx:id="commandLogger" editable="false" layoutX="306.0" layoutY="14.0" prefHeight="200.0" prefWidth="280.0" style="-fx-text-fill: #FFF; -fx-control-inner-background: #000;" text="output" visible="false">
                <font>
                   <Font size="10.0" />
                </font>
             </TextArea>
-            <TextField fx:id="commandLine" layoutX="14.0" layoutY="222.0" prefHeight="27.0" prefWidth="280.0" promptText="command">
+            <TextField fx:id="commandLine" layoutX="14.0" layoutY="222.0" prefHeight="27.0" prefWidth="280.0" promptText="command" visible="false">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Button fx:id="executeBtn" layoutX="306.0" layoutY="222.0" mnemonicParsing="false" onAction="#test" prefHeight="27.0" prefWidth="60.0" text="execute">
+            <Button fx:id="executeBtn" layoutX="306.0" layoutY="222.0" mnemonicParsing="false" onAction="#test" prefHeight="27.0" prefWidth="60.0" text="execute" visible="false">
                <font>
                   <Font size="10.0" />
                </font>
