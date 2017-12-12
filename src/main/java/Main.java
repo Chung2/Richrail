@@ -39,6 +39,5 @@ public class Main {
 //        for(Component component : components) {
 //            System.out.println(component.getId() + " " + component.getSeats() + " " + component.getComponentType().getName());
 //        }
-
     }
 }
