@@ -103,7 +103,7 @@ public class Main2 {
         Component component = new Component();
         component.setSeats(10);
         component.setComponentType(ct3);
-        component.setOrder(5);
+        component.setCode("");
         component.setTrain(train);
 
         ServiceProvider.getComponentService().addComponent(component);

@@ -30,8 +30,8 @@ public class Component {
     @JoinColumn(name = "train", nullable = false)
     private Train train;
 
-    @Column(name = "`order`", nullable = true)
-    private int order;
+    @Column(name = "code", nullable = true)
+    private String code;
 
     public Component() {
     }
@@ -68,12 +68,12 @@ public class Component {
         this.componentType = componentType;
     }
 
-    public int getOrder() {
-        return order;
+    public String getCode() {
+        return code;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public void setCode(String code) {
+        this.code = code;
     }
 }
 

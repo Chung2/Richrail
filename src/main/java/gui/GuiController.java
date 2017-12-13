@@ -53,6 +53,9 @@ public class GuiController {
     @FXML
     private TextField seatsField;
 
+    @FXML
+    private ComboBox allComponents;
+
     private Gui gui;
 
     public void setMain(Gui gui) {
@@ -85,16 +88,19 @@ public class GuiController {
                 break;
         }
     }
-
     @FXML
-    public void initialize() {
-        //choiceBox.getItems().removeAll(choiceBox.getItems());
+    public void  getTrains(){
+        trainField.getItems().clear();
         List<Train> trainList = ServiceProvider.getTrainService().getAllTrains();
         for (Train train : trainList) {
             trainField.getItems().add(train.getName());
         }
         trainField.getSelectionModel().selectFirst();
 
+    }
+
+    public void getComponentTypes(){
+        componentField.getItems().clear();
         List<ComponentType> componentTypes = ServiceProvider.getComponentTypeService().getAllComponentTypes();
         for (ComponentType componentType : componentTypes) {
             componentField.getItems().add(componentType.getName());
@@ -102,10 +108,25 @@ public class GuiController {
         componentField.getSelectionModel().selectFirst();
     }
 
+    public void getComponents(){
+        allComponents.getItems().clear();
+        List<Component> components = ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()).getComponents();
+        for(Component component : components){
+            allComponents.getItems().add(component.getCode());
+        }
+        allComponents.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    public void initialize() {
+        getTrains();
+        getComponentTypes();
+    }
+
     @FXML
     public void selectTrain(ActionEvent event) {
         selectedTrain.setText(trainField.getSelectionModel().getSelectedItem().toString());
-
+        getComponents();
     }
 
     @FXML
@@ -117,6 +138,7 @@ public class GuiController {
                 Train train = new Train();
                 train.setName(trainNameField.getText());
                 ServiceProvider.getTrainService().addTrain(train);
+                initialize();
             } else {
                 alertMessageNewTrain(2);
             }
@@ -132,7 +154,7 @@ public class GuiController {
             cpt.setTrain(ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()));
             cpt.setSeats(Integer.parseInt(seatsField.getText().toString()));
             cpt.setComponentType(ServiceProvider.getComponentTypeService().getComponentTypeByName(componentField.getSelectionModel().getSelectedItem().toString()));
-            cpt.setOrder(99);
+            cpt.setCode("");
             ServiceProvider.getComponentService().addComponent(cpt);
         }
     }
