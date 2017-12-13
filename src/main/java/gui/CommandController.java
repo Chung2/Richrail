@@ -32,15 +32,6 @@ public class CommandController{
     private TextField commandLine;
 
     @FXML
-    private Pane commandPane;
-
-    @FXML
-    private Pane displayPane;
-
-    @FXML
-    private Pane canvas;
-
-    @FXML
     private TextArea statusLogger;
 
     @FXML
@@ -49,8 +40,10 @@ public class CommandController{
     @FXML
     private Button switchView;
 
-    // 0 = display GUI, 1 = command GUI
-    private int currentPane = 0;
+    @FXML
+    public void initialize() {
+        updateStatusLogger();
+    }
 
     public static String getCurrentTimeStamp() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");//dd/MM/yyyy
@@ -59,17 +52,40 @@ public class CommandController{
         return strDate;
     }
 
+    public void updateStatusLogger() {
+
+        String statusLogger = "";
+        List<Component> components = ServiceProvider.getComponentService().getAllComponents();
+        List<Train> trains = ServiceProvider.getTrainService().getAllTrains();
+
+        statusLogger += "trains (name) : (components_name) \n \n";
+
+        for (Train train : trains) {
+            statusLogger += "(" + train.getName() + ")";
+            for (Component traincomponent : train.getComponents()){
+                statusLogger += "-(" + traincomponent.getCode() + ")";
+            }
+            statusLogger += "\n";
+        }
+
+        statusLogger += "\n \n components (name : seats : type) \n \n";
+
+        for (Component component : components) {
+            statusLogger += "(" + component.getCode() + " : " + component.getSeats() + " : " + component.getComponentType().getName() + ")\n";
+        }
+
+
+
+        this.statusLogger.setText(statusLogger);
+
+    }
+
     public void addStatusLoggerMessage(String s) {
-        this.statusLogger.setText(this.statusLogger.getText() + "\n" + s);
+        //this.statusLogger.setText(this.statusLogger.getText() + "\n" + s);
     }
 
     public void addCommandLoggerMessage(String s) {
         this.commandLogger.setText(this.commandLogger.getText() + "\n" + "[" + getCurrentTimeStamp() + "] :" + s);
-    }
-
-    @FXML
-    public void test(ActionEvent event){
-        System.out.println(trainNameField.getText());
     }
 
     @FXML
@@ -165,6 +181,7 @@ public class CommandController{
         if (i == 0) {
             addCommandLoggerMessage("command not correct");
         }
+        updateStatusLogger();
         i = 0;
     }
 
