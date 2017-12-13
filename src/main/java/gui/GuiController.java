@@ -5,10 +5,15 @@ import entity.ComponentType;
 import entity.Train;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import models.ServiceProvider;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -55,6 +60,9 @@ public class GuiController {
 
     @FXML
     private ComboBox allComponents;
+
+    @FXML
+    private Button switchView;
 
     private Gui gui;
 
@@ -159,33 +167,49 @@ public class GuiController {
         }
     }
 
+//    @FXML
+//    public void switchGUI(ActionEvent event) {
+//        switch (currentPane) {
+//            case 0:
+//                this.currentPane = 1;
+//                commandPane.setDisable(false);
+//                commandPane.setVisible(true);
+//                displayPane.setVisible(false);
+//                displayPane.setDisable(true);
+//                canvas.setDisable(false);
+//                canvas.setDisable(true);
+//                // switch to Command view
+//                System.out.println("Switching to Command view");
+//                break;
+//            case 1:
+//                this.currentPane = 0;
+//                commandPane.setDisable(true);
+//                commandPane.setVisible(false);
+//                displayPane.setDisable(false);
+//                displayPane.setVisible(true);
+//                canvas.setDisable(false);
+//                canvas.setVisible(true);
+//                // switch to Display view
+//                System.out.println("Switching to Display view");
+//                break;
+//            default:
+//                break;
+//        }
+
     @FXML
-    public void switchGUI(ActionEvent event) {
-        switch (currentPane) {
-            case 0:
-                this.currentPane = 1;
-                commandPane.setDisable(false);
-                commandPane.setVisible(true);
-                displayPane.setVisible(false);
-                displayPane.setDisable(true);
-                canvas.setDisable(false);
-                canvas.setDisable(true);
-                // switch to Command view
-                System.out.println("Switching to Command view");
-                break;
-            case 1:
-                this.currentPane = 0;
-                commandPane.setDisable(true);
-                commandPane.setVisible(false);
-                displayPane.setDisable(false);
-                displayPane.setVisible(true);
-                canvas.setDisable(false);
-                canvas.setVisible(true);
-                // switch to Display view
-                System.out.println("Switching to Display view");
-                break;
-            default:
-                break;
-        }
+    private void switchGUI(ActionEvent event) throws IOException {
+        Stage stage;
+        stage=(Stage) switchView.getScene().getWindow();
+        //load up OTHER FXML document
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("commandgui.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        CommandController commandController = fxmlLoader.getController();
+
+        //create a new scene with root and set the stage
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
+
 }

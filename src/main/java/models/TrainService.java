@@ -30,21 +30,34 @@ public class TrainService {
     }
 
     public void addTrain(Train train) {
-        ServiceProvider.getEntityManager().getTransaction().begin();
-        trainDAO.insert(train);
-        ServiceProvider.getEntityManager().getTransaction().commit();
+        try {
+            ServiceProvider.getEntityManager().getTransaction().begin();
+            trainDAO.insert(train);
+            ServiceProvider.getEntityManager().getTransaction().commit();
+        } catch (Exception e) {
+            ServiceProvider.getEntityManager().getTransaction().rollback();
+        }
     }
 
     public void updateTrain(Train train) {
-        ServiceProvider.getEntityManager().getTransaction().begin();
-        trainDAO.update(train);
-        ServiceProvider.getEntityManager().getTransaction().commit();
+        try {
+            ServiceProvider.getEntityManager().getTransaction().begin();
+            trainDAO.update(train);
+            ServiceProvider.getEntityManager().getTransaction().commit();
+        } catch (Exception e) {
+            ServiceProvider.getEntityManager().getTransaction().rollback();
+        }
     }
 
     public void deleteTrain(Train train) {
-        ServiceProvider.getEntityManager().getTransaction().begin();
-        trainDAO.delete(train);
-        ServiceProvider.getEntityManager().getTransaction().commit();
+        try {
+            ServiceProvider.getEntityManager().getTransaction().begin();
+            trainDAO.delete(train);
+            ServiceProvider.getEntityManager().getTransaction().commit();
+        } catch (Exception e) {
+            ServiceProvider.getEntityManager().getTransaction().rollback();
+        }
+
     }
 
 }

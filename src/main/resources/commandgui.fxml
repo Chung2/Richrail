@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CommandController">
+    <children>
+      <Pane fx:id="commandPane" layoutY="200.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #EEE;">
+         <children>
+            <TextArea fx:id="statusLogger" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="280.0" text="status">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </TextArea>
+            <TextArea fx:id="commandLogger" editable="false" layoutX="306.0" layoutY="14.0" prefHeight="200.0" prefWidth="280.0" style="-fx-text-fill: #FFF; -fx-control-inner-background: #000;" text="output">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </TextArea>
+            <TextField fx:id="commandLine" layoutX="14.0" layoutY="222.0" prefHeight="27.0" prefWidth="280.0" promptText="command">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </TextField>
+            <Button fx:id="executeBtn" layoutX="306.0" layoutY="222.0" mnemonicParsing="false" onAction="#readCommandLine" prefHeight="27.0" prefWidth="60.0" text="execute">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+         </children></Pane>
+      <Button fx:id="switchView" layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#switchGUI" prefHeight="25.0" prefWidth="150.0" text="Switch Display" />
+    </children>
+</AnchorPane>
