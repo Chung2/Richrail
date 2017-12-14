@@ -34,10 +34,11 @@ public class Logging {
             String filename = getCurrentTime("dd-MM-yyyy_HHmmss") + ".txt";
 
             // create directories if they dont exist already
-            new File ("src/log/"+getCurrentTime("dd-MM-yyyy")).mkdirs();
+            new File ("src"+File.separator+"log"+File.separator+getCurrentTime("dd-MM-yyyy")).mkdirs();
+
 
             // create the file
-            File file = new File("src/log/" + getCurrentTime("dd-MM-yyyy") + "/" + filename);
+            File file = new File("src"+File.separator+"log"+File.separator+getCurrentTime("dd-MM-yyyy") +File.separator+ filename);
             setPrintWriter(new PrintWriter(file));
 
             // write a few lines
