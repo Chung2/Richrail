@@ -22,7 +22,7 @@ public class Logging {
     }
 
     private static String getCurrentTime(String format) {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy_HHmmss");//dd/MM/yyyy
+        SimpleDateFormat sdfDate = new SimpleDateFormat(format);//dd/MM/yyyy
         Date now = new Date();
         String strDate = sdfDate.format(now);
         return strDate;
