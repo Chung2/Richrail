@@ -27,7 +27,7 @@ public class Component {
     private ComponentType componentType;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "train", nullable = false)
+    @JoinColumn(name = "train", nullable = true)
     private Train train;
 
     @Column(name = "code", nullable = true)

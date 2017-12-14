@@ -1,10 +1,13 @@
 package models;
 
 import entity.Component;
+import log.Logging;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import persistence.ComponentDAO;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 
 /**
@@ -18,32 +21,86 @@ public class ComponentService {
     }
 
     public List<Component> getAllComponents(){
-        return comdao.getAll();
+        List list;
+        try {
+            list = comdao.getAll();
+            Logging.writeLine("[SELECT] Getting all components");
+        } catch (Exception e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            Logging.writeLine(errors.toString());
+            list = null;
+        }
+        return list;
     }
 
     public Component getComponentById(int id) {
-        return comdao.findById(id);
+        Component component;
+        try {
+            component = comdao.findById(id);
+            Logging.writeLine("[SELECT] Getting component by ID: " + id);
+        } catch (Exception e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            Logging.writeLine(errors.toString());
+            component = null;
+        }
+        return component;
     }
 
     public List<Component> getComponentsByTrainId(int id) {
-        return comdao.getComponentsByTrain(id);
+        List list;
+        try {
+            list = comdao.getComponentsByTrain(id);
+            Logging.writeLine("[SELECT] Getting all component by TRAIN ID: " + id);
+        } catch (Exception e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            Logging.writeLine(errors.toString());
+            list = null;
+        }
+        return list;
     }
 
     public void addComponent(Component cp) {
-        ServiceProvider.getEntityManager().getTransaction().begin();
-        comdao.insert(cp);
-        ServiceProvider.getEntityManager().getTransaction().commit();
+        try {
+            ServiceProvider.getEntityManager().getTransaction().begin();
+            comdao.insert(cp);
+            ServiceProvider.getEntityManager().getTransaction().commit();
+            Logging.writeLine("[INSERT] Adding new component ( ID :" + cp.getId() + " , CODE: " + cp.getCode() + ", SEATS: " + cp.getSeats() + " )" );
+        } catch (Exception e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            Logging.writeLine(errors.toString());
+            ServiceProvider.getEntityManager().getTransaction().rollback();
+        }
     }
 
     public void updateComponent(Component cp) {
-        ServiceProvider.getEntityManager().getTransaction().begin();
-        comdao.update(cp);
-        ServiceProvider.getEntityManager().getTransaction().commit();
+        try {
+            ServiceProvider.getEntityManager().getTransaction().begin();
+            comdao.update(cp);
+            ServiceProvider.getEntityManager().getTransaction().commit();
+            Logging.writeLine("[UPDATE] Updating component ( ID :" + cp.getId() + " , CODE: " + cp.getCode() + ", SEATS: " + cp.getSeats() + " )" );
+        } catch (Exception e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            Logging.writeLine(errors.toString());
+            ServiceProvider.getEntityManager().getTransaction().rollback();
+        }
     }
 
     public void deleteComponent(Component cp) {
-        ServiceProvider.getEntityManager().getTransaction().begin();
-        comdao.delete(cp);
-        ServiceProvider.getEntityManager().getTransaction().commit();
+        try {
+            ServiceProvider.getEntityManager().getTransaction().begin();
+            comdao.delete(cp);
+            ServiceProvider.getEntityManager().getTransaction().commit();
+            Logging.writeLine("[DELETE] Deleting component ( ID :" + cp.getId() + " , CODE: " + cp.getCode() + ", SEATS: " + cp.getSeats() + " )" );
+        } catch (Exception e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            Logging.writeLine(errors.toString());
+            ServiceProvider.getEntityManager().getTransaction().rollback();
+        }
     }
 }
