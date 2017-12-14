@@ -20,6 +20,7 @@ import models.ServiceProvider;
 import java.io.IOException;
 import java.rmi.server.ExportException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -114,11 +115,20 @@ public class CommandController{
 
                             try {
                                 train = new Train();
+
+                                // check whether name is unique
+                                List<Train> trains = ServiceProvider.getTrainService().getAllTrains();
+                                for (Train t : trains) {
+                                    if (t.getName().equals(list.get(2))) {
+                                        throw new Exception();
+                                    }
+                                }
                                 train.setName(list.get(2));
+
                                 ServiceProvider.getTrainService().addTrain(train);
                                 addCommandLoggerMessage("train " + list.get(2) + " created");
                             } catch (Exception e) {
-                                addCommandLoggerMessage("train" + list.get(2) + " could not be created");
+                                addCommandLoggerMessage("train " + list.get(2) + " could not be created");
                             }
                             i = 1;
                         }
@@ -126,15 +136,107 @@ public class CommandController{
 
                     // create a new component
                     case "component":
+
+                        if (list.get(2) != null) {
+
+                            try {
+                                component = new Component();
+
+                                // check whether name is unique
+                                List<Component> components = ServiceProvider.getComponentService().getAllComponents();
+                                for (Component c : components) {
+                                    if (c.getCode().equals(list.get(2))) {
+                                        throw new Exception();
+                                    }
+                                }
+                                component.setCode(list.get(2));
+
+                                // assign component type
+                                if (list.get(3).equals("type") && list.get(4) != null) {
+                                    ComponentType type = ServiceProvider.getComponentTypeService().getComponentTypeByName(list.get(4));
+                                    if (type != null) {
+                                        component.setComponentType(type);
+                                    } else throw new Exception();
+                                } else if (list.get(5).equals("type") && list.get(6) != null) {
+                                    ComponentType type = ServiceProvider.getComponentTypeService().getComponentTypeByName(list.get(6));
+                                    if (type != null) {
+                                        component.setComponentType(type);
+                                    } else throw new Exception();
+                                } else {
+                                    List<ComponentType> types = ServiceProvider.getComponentTypeService().getAllComponentTypes();
+                                    component.setComponentType(types.get(0));
+                                }
+
+                                // assign seats
+                                if (list.get(3).equals("numseats") && list.get(4) != null) {
+                                    component.setSeats(Integer.parseInt(list.get(4)));
+                                } else if (list.get(5).equals("numseats") && list.get(6) != null) {
+                                    component.setSeats(Integer.parseInt(list.get(6)));
+                                } else {
+                                    component.setSeats(20);
+                                }
+
+                                // create component
+                                ServiceProvider.getComponentService().addComponent(component);
+                                addCommandLoggerMessage("component " + list.get(2) + " created with " + component.getSeats() + " seats and componentType " + component.getComponentType().getName());
+                            } catch (Exception e) {
+                                addCommandLoggerMessage("component " + list.get(2) + " could not be created");
+                            }
+                            i = 1;
+                        }
                         break;
 
+                    // create a new component type
+                    case "type":
+
+                        if (list.get(2) != null) {
+
+                            try {
+                                componentType = new ComponentType();
+
+                                // check whether name is unique
+                                List<ComponentType> types = ServiceProvider.getComponentTypeService().getAllComponentTypes();
+                                for (ComponentType t : types) {
+                                    if (t.getName().equals(list.get(2))) {
+                                        throw new Exception();
+                                    }
+                                }
+                                componentType.setName(list.get(2));
+
+                                // create component type
+                                ServiceProvider.getComponentTypeService().addComponentType(componentType);
+                                addCommandLoggerMessage("componentType " + list.get(2) + " created");
+                            } catch (Exception e) {
+                                addCommandLoggerMessage("componentType " + list.get(2) + " could not be created");
+                            }
+                            i = 1;
+                        }
+                        break;
 
                 }
                 break;
 
             // add a component to a train
             case "add":
+                if (list.get(2).equals("to") && list.get(3) != null) {
 
+                    try {
+                        // check whether id's actually exist
+                        //TODO implement getComponentByCode()
+                        Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(1)));
+                        Train t = ServiceProvider.getTrainService().getTrainByName(list.get(3));
+
+                        if (c != null && t != null) {
+                            c.setTrain(t);
+                        }
+
+                        ServiceProvider.getComponentService().updateComponent(c);
+                        addCommandLoggerMessage("component " + list.get(1) + " added to train " + list.get(3));
+                    } catch (Exception e) {
+                        addCommandLoggerMessage("componentType " + list.get(1) + " could not be created");
+                    }
+                    i = 1;
+                }
                 break;
 
             // get number of seats from a component
