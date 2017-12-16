@@ -228,10 +228,11 @@ public class CommandController{
 
                         if (c != null && t != null) {
                             c.setTrain(t);
+                            ServiceProvider.getComponentService().updateComponent(c);
+                            addCommandLoggerMessage("component " + list.get(1) + " added to train " + list.get(3));
+                        } else {
+                            throw new Exception();
                         }
-
-                        ServiceProvider.getComponentService().updateComponent(c);
-                        addCommandLoggerMessage("component " + list.get(1) + " added to train " + list.get(3));
                     } catch (Exception e) {
                         addCommandLoggerMessage("componentType " + list.get(1) + " could not be created");
                     }
@@ -241,6 +242,55 @@ public class CommandController{
 
             // get number of seats from a component
             case "getnumseats":
+
+                switch (list.get(1)) {
+
+                    // get number of seats in train
+                    case "train":
+
+                        try {
+                            if (list.get(2) != null) {
+                                // check whether id actually exist
+                                Train t = ServiceProvider.getTrainService().getTrainByName(list.get(2));
+
+                                if (t != null) {
+                                    int result = 0;
+                                    for (Component c : ServiceProvider.getComponentService().getComponentsByTrainId(t.getId())) {
+                                        result += c.getSeats();
+                                    }
+                                    addCommandLoggerMessage("number of seats in train " + list.get(1) + ": " + result);
+                                } else {
+                                    throw new Exception();
+                                }
+                            }
+                        } catch (Exception e) {
+                            addCommandLoggerMessage("seat number from train " + list.get(1) + " could not be counted");
+                        }
+                        i = 1;
+                        break;
+
+                    // get number of seats in component
+                    case "component":
+
+                        try {
+                            if (list.get(2) != null) {
+                                // check whether id actually exist
+                                //TODO implement getComponentByCode()
+                                Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(2)));
+
+                                if (c != null) {
+                                    addCommandLoggerMessage("number of seats in component " + list.get(1) + ": " + c.getSeats());
+                                } else {
+                                    throw new Exception();
+                                }
+                            }
+
+                        } catch (Exception e) {
+                            addCommandLoggerMessage("seat number from component " + list.get(1) + " could not be counted");
+                        }
+                        i = 1;
+                        break;
+                }
 
                 break;
 
@@ -268,6 +318,23 @@ public class CommandController{
                     // delete a component
                     case "component":
 
+                        if (list.get(2) != null) {
+                            try {
+                                // check whether id actually exist
+                                //TODO implement getComponentByCode()
+                                Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(2)));
+
+                                if (c != null) {
+                                    ServiceProvider.getComponentService().deleteComponent(c);
+                                    addCommandLoggerMessage("component " + list.get(2) + " deleted");
+                                } else {
+                                    throw new Exception();
+                                }
+                            } catch (Exception e) {
+                                addCommandLoggerMessage("component " + list.get(2) + " does not exist");
+                            }
+                            i = 1;
+                        }
                         break;
 
 
@@ -277,6 +344,47 @@ public class CommandController{
             // remove a component from a train
             case "remove":
 
+                if (list.get(1) != null && list.get(2).equals("from") && list.get(3) != null) {
+
+                    try {
+                        // check whether id's actually exist
+                        //TODO implement getComponentByCode()
+                        Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(1)));
+                        Train t = ServiceProvider.getTrainService().getTrainByName(list.get(3));
+
+                        if (c != null && t != null) {
+                            c.setTrain(null);
+                        } else {
+                            throw new Exception();
+                        }
+                    } catch (Exception e) {
+                        addCommandLoggerMessage("component " + list.get(1) + " could not be removed from train " + list.get(3));
+                    }
+                    i = 1;
+                }
+                break;
+
+            case "help":
+
+                String helpMessage = "grammar RichRail;\n\n";
+                helpMessage += "command\t: newcommand | addcommand | getcommand | remcommand | helpcommand;\n\n";
+                helpMessage += "newcommand\t: newtraincommand | newcomponentcommand | newtypecommand;\n";
+                helpMessage += "newtraincommand\t: \'new\' \'train\' ID;\n";
+                helpMessage += "newcomponentcommand\t: \'new\' \'component\' ID (\'numseats\' NUMBER) | (\'type\' NUMBER)?;\n";
+                helpMessage += "newtypecommand\t: \'new\' \'type\' ID;\n";
+                helpMessage += "addcommand\t: \'add\' ID \'to\' ID;\n";
+                helpMessage += "getcommand\t: \'getnumseats\' type ID;\n";
+                helpMessage += "delcommand\t: \'delete\' type ID;\n";
+                helpMessage += "remcommand\t: \'remove\' ID \'from\' ID;\n";
+                helpMessage += "helpcommand\t: \'help\';\n\n";
+                helpMessage += "type \t: (\'train\') | (\'component\');\n\n";
+                helpMessage += "ID\t: (\'a\'..\'z\')(\'a\'..\'z\'|\'0\'..\'9\')*;\n";
+                helpMessage += "NUMBER\t: (\'0\'..\'9\')+;\n";
+                helpMessage += "WHITESPACE\t: (\'\\t\' | \' \' | \'\\r\' | \'\\n\' | \'\\u000C\' )+;";
+
+                addCommandLoggerMessage(helpMessage);
+
+                i = 1;
                 break;
         }
 
