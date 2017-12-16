@@ -53,7 +53,7 @@ public class TrainService {
     public Train getTrainByName(String name){
         Train train;
         try {
-            train = trainDAO.getTrainByName(name);
+            train = trainDAO.findByName(name);
             Logging.writeLine("[SELECT] Getting train by NAME: " + name);
         } catch (Exception e) {
             StringWriter errors = new StringWriter();
@@ -66,9 +66,11 @@ public class TrainService {
 
     public void addTrain(Train train) {
         try {
+
             ServiceProvider.getEntityManager().getTransaction().begin();
             trainDAO.insert(train);
             ServiceProvider.getEntityManager().getTransaction().commit();
+
             Logging.writeLine("[INSERT] Adding new train ( ID :" + train.getId() + " , NAME: " + train.getName() + " )" );
         } catch (Exception e) {
             StringWriter errors = new StringWriter();
@@ -78,11 +80,14 @@ public class TrainService {
         }
     }
 
+    // Update a Train Object in the database
     public void updateTrain(Train train) {
         try {
+
             ServiceProvider.getEntityManager().getTransaction().begin();
             trainDAO.update(train);
             ServiceProvider.getEntityManager().getTransaction().commit();
+
             Logging.writeLine("[UPDATE] Updating train ( ID :" + train.getId() + " , NAME: " + train.getName() + " )" );
         } catch (Exception e) {
             StringWriter errors = new StringWriter();
@@ -92,18 +97,20 @@ public class TrainService {
         }
     }
 
-    // TO DO: if train gets deleted, component needs to get updated so components wont get deleted
+    // Delete a Train Object in the database
     public void deleteTrain(Train train) {
         try {
-            List<Component> components = train.getComponents();
-            List<Component> nullComponents = new ArrayList<Component>();
 
+            List<Component> components = train.getComponents();
+
+            // Remove all current components from the train
             for (Component component : components) {
                 component.setTrain(null);
                 ServiceProvider.getComponentService().updateComponent(component);
             }
 
-            train.setComponents(nullComponents);
+            // Remove the components from the train
+            train.setComponents(new ArrayList<Component>());
 
             ServiceProvider.getEntityManager().getTransaction().begin();
             trainDAO.delete(train);

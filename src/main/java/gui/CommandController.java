@@ -223,7 +223,8 @@ public class CommandController{
                     try {
                         // check whether id's actually exist
                         //TODO implement getComponentByCode()
-                        Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(1)));
+                        //Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(1)));
+                        Component c = ServiceProvider.getComponentService().getComponentByCode(list.get(1));
                         Train t = ServiceProvider.getTrainService().getTrainByName(list.get(3));
 
                         if (c != null && t != null) {
@@ -276,8 +277,8 @@ public class CommandController{
                             if (list.get(2) != null) {
                                 // check whether id actually exist
                                 //TODO implement getComponentByCode()
-                                Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(2)));
-
+                                //Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(2)));
+                                Component c = ServiceProvider.getComponentService().getComponentByCode(list.get(2));
                                 if (c != null) {
                                     addCommandLoggerMessage("number of seats in component " + list.get(1) + ": " + c.getSeats());
                                 } else {
@@ -322,8 +323,8 @@ public class CommandController{
                             try {
                                 // check whether id actually exist
                                 //TODO implement getComponentByCode()
-                                Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(2)));
-
+                                //Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(2)));
+                                Component c = ServiceProvider.getComponentService().getComponentByCode(list.get(2));
                                 if (c != null) {
                                     ServiceProvider.getComponentService().deleteComponent(c);
                                     addCommandLoggerMessage("component " + list.get(2) + " deleted");
@@ -349,7 +350,8 @@ public class CommandController{
                     try {
                         // check whether id's actually exist
                         //TODO implement getComponentByCode()
-                        Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(1)));
+                        //Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(1)));
+                        Component c = ServiceProvider.getComponentService().getComponentByCode(list.get(1));
                         Train t = ServiceProvider.getTrainService().getTrainByName(list.get(3));
 
                         if (c != null && t != null) {

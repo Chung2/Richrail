@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface ComponentTypeDAO extends BaseDAO<ComponentType> {
 
-    public ComponentType findByType(String type);
+    ComponentType findByType(String type);
 
 }

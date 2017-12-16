@@ -15,9 +15,12 @@ import java.util.List;
  */
 public interface ComponentDAO extends BaseDAO<Component> {
 
-    public List<Component> getComponentsByTrain(int i);
-    public Component getComponentById(int i);
-    public Component getComponentByPre(int i, int trainid);
+    List<Component> getAllByTrainId(int i);
+    Component findByCode(String code);
+    // TODO delete getComponentById because it already exists in ABstractDaoJpaImpl bestaat (findById)
+//    Component getComponentById(int i);
+    // TODO maybe delete getComponentByPre (never used)
+    Component getComponentByPre(int i, int trainid);
 
 
 }

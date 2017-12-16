@@ -48,10 +48,24 @@ public class ComponentService {
         return component;
     }
 
+    public Component getComponentByCode(String code) {
+        Component component;
+        try {
+            component = comdao.findByCode(code);
+            Logging.writeLine("[SELECT] Getting component by CODE: " + code);
+        } catch (Exception e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            Logging.writeLine(errors.toString());
+            component = null;
+        }
+        return component;
+    }
+
     public List<Component> getComponentsByTrainId(int id) {
         List list;
         try {
-            list = comdao.getComponentsByTrain(id);
+            list = comdao.getAllByTrainId(id);
             Logging.writeLine("[SELECT] Getting all component by TRAIN ID: " + id);
         } catch (Exception e) {
             StringWriter errors = new StringWriter();
