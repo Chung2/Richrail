@@ -129,7 +129,7 @@
       <Button fx:id="switchView" layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#switchGUI" prefHeight="25.0" prefWidth="150.0" text="Switch Display" />
         <Pane fx:id="canvas" prefHeight="250.0" prefWidth="600.0" style="-fx-background-color: #FFF;">
          <children>
-            <ScrollPane prefHeight="250.0" prefWidth="600.0">
+            <ScrollPane fx:id="scrollPane" prefHeight="250.0" prefWidth="600.0">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="251.0" prefWidth="600.0">
                      <children>

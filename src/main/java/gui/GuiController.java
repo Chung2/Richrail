@@ -82,6 +82,9 @@ public class GuiController {
     @FXML
     private ImageView wagonImage;
 
+    @FXML
+    private ScrollPane scrollPane;
+
     private Gui gui;
 
     public void setMain(Gui gui) {
@@ -217,9 +220,11 @@ public class GuiController {
 
     public void addElementsHbox(){
         hbox.getChildren().clear();
-        for(Image image : createImage(componentTypeIds())){
+        List<Image> imageViews = createImage(componentTypeIds());
+        for(Image image : imageViews){
             hbox.getChildren().add(new ImageView(image));
         }
+        scrollPane.setContent(hbox);
     }
 
     public void getComponentTypes(){
