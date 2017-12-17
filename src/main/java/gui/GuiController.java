@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.ServiceProvider;
 import org.hibernate.boot.jaxb.SourceType;
@@ -38,6 +39,9 @@ public class GuiController {
 
     @FXML
     private HBox hbox;
+
+    @FXML
+    private VBox vbox;
 
     @FXML
     private Pane commandPane;
@@ -181,49 +185,8 @@ public class GuiController {
         return ids;
     }
 
-    //create list<Image> to add in addElementsHbox
-    public List<Image> createImage(List<Integer> componenttypeids){
-        List imageViews = new ArrayList<Image>();
-        try {
-            FileInputStream input;
-            for (Integer id : componenttypeids){
-                switch (id) {
-                    case 1:
-                        input = new FileInputStream(System.getProperty("user.dir") + "/" +
-                                "src/main/resources/assets/locomotive.jpg");
-                        Image imageLocomotive = new Image(input);
-                        System.out.println("DEBUG LOCOMOTIVE");
-                        imageViews.add(imageLocomotive);
-                        System.out.println("locomotive image is created");
-                        break;
-
-                    case 2:
-                        input = new FileInputStream(System.getProperty("user.dir") + "/" +
-                                "src/main/resources/assets/wagon.jpg");
-                        Image imageWagon = new Image(input);
-                        System.out.println("DEBUG WAGON");
-                        imageViews.add(imageWagon);
-
-                        System.out.println("wagon image is created");
-                        break;
-                    case 3:
-                        input = new FileInputStream(System.getProperty("user.dir") + "/" +
-                                "src/main/resources/assets/cargotrain.jpg");
-                        Image imageCargoTrain = new Image(input);
-                        System.out.println("DEBUG CARGOTRAIN");
-                        imageViews.add(imageCargoTrain);
-
-                        System.out.println("cargoTrain image is created");
-                        break;
-                }
-            }
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        return imageViews;
-    }
-
     public void addElementsHbox(){
+
         hbox.getChildren().clear();
 
         List<Component> components = ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()).getComponents();
@@ -234,16 +197,13 @@ public class GuiController {
                 InputStream in = new ByteArrayInputStream(component.getComponentType().getImage());
                 BufferedImage bufferedImageimage = ImageIO.read(in);
                 Image image = SwingFXUtils.toFXImage(bufferedImageimage, null);
-                hbox.getChildren().add(new ImageView(image));
+                vbox = new VBox();
+                vbox.getChildren().addAll(new ImageView(image),new Label("Component code: "+component.getCode()),new Label("Capacity: "+component.getSeats()), new Label("Componentcode: "+component.getComponentType().getName()));
+                hbox.getChildren().add(vbox);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-//        List<Image> imageViews = createImage(componentTypeIds());
-//        for(Image image : imageViews){
-//            hbox.getChildren().add(new ImageView(image));
-//        }
         scrollPane.setContent(hbox);
     }
 
@@ -257,7 +217,7 @@ public class GuiController {
     }
 
     public void getComponents(){
-        allComponents.getItems().clear();
+        allComponents.getItems().removeAll();
         List<Component> components = ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()).getComponents();
         for(Component component : components){
             allComponents.getItems().add(component.getCode());
@@ -392,7 +352,12 @@ public class GuiController {
             else{
                 alertMessageNewTrain(3);
             }
+            System.out.println("refresh pane pls");
+            System.out.println(componentTypeIds());
+            addElementsHbox();
+            System.out.println("jup!");
         }
+        addElementsHbox();
     }
 
     @FXML
