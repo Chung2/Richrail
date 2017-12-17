@@ -34,7 +34,6 @@ import java.util.List;
  */
 
 
-
 public class GuiController {
 
     @FXML
@@ -167,7 +166,7 @@ public class GuiController {
     }
 
     @FXML
-    public void getTrains(){
+    public void getTrains() {
         trainField.getItems().clear();
         List<Train> trainList = ServiceProvider.getTrainService().getAllTrains();
         for (Train train : trainList) {
@@ -177,20 +176,10 @@ public class GuiController {
 
     }
 
-    public List<Integer> componentTypeIds(){
-        List<Integer> ids = new ArrayList<>();
-        for(Component component: ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()).getComponents()){
-            ids.add(component.getComponentType().getId());
-        }
-        return ids;
-    }
-
-    public void addElementsHbox(){
+    public void addElementsHbox() {
 
         hbox.getChildren().clear();
-
         List<Component> components = ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()).getComponents();
-
         for (Component component : components) {
 
             try {
@@ -198,7 +187,7 @@ public class GuiController {
                 BufferedImage bufferedImageimage = ImageIO.read(in);
                 Image image = SwingFXUtils.toFXImage(bufferedImageimage, null);
                 vbox = new VBox();
-                vbox.getChildren().addAll(new ImageView(image),new Label("Component code: "+component.getCode()),new Label("Capacity: "+component.getSeats()), new Label("Componentcode: "+component.getComponentType().getName()));
+                vbox.getChildren().addAll(new ImageView(image), new Label("Component code: " + component.getCode()), new Label("Capacity: " + component.getSeats()), new Label("Componentcode: " + component.getComponentType().getName()));
                 hbox.getChildren().add(vbox);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -207,7 +196,7 @@ public class GuiController {
         scrollPane.setContent(hbox);
     }
 
-    public void getComponentTypes(){
+    public void getComponentTypes() {
         componentfieldtype.getItems().clear();
         List<ComponentType> componentTypes = ServiceProvider.getComponentTypeService().getAllComponentTypes();
         for (ComponentType componentType : componentTypes) {
@@ -216,10 +205,10 @@ public class GuiController {
         componentfieldtype.getSelectionModel().selectFirst();
     }
 
-    public void getComponents(){
+    public void getComponents() {
         allComponents.getItems().clear();
         List<Component> components = ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()).getComponents();
-        for(Component component : components){
+        for (Component component : components) {
             allComponents.getItems().add(component.getCode());
         }
         allComponents.getSelectionModel().selectFirst();
@@ -249,73 +238,73 @@ public class GuiController {
     }
 
 
-    public boolean checktemptyfieldtrain(){
+    public boolean checktemptyfieldtrain() {
         boolean empty = false;
 
-        if(trainNameField.getText() == null || trainNameField.getText().trim().isEmpty()){
+        if (trainNameField.getText() == null || trainNameField.getText().trim().isEmpty()) {
             empty = true;
         }
         return empty;
     }
 
-    public boolean checkcomponentfield(){
+    public boolean checkcomponentfield() {
         boolean input = false;
-        if(allComponents.getSelectionModel().getSelectedItem().toString() == null || componentfieldtype.getSelectionModel().getSelectedItem().toString().isEmpty()){
+        if (allComponents.getSelectionModel().getSelectedItem().toString() == null || componentfieldtype.getSelectionModel().getSelectedItem().toString().isEmpty()) {
             input = true;
         }
         return input;
     }
 
-    public boolean checkemptyfieldseats(){
+    public boolean checkemptyfieldseats() {
         boolean input = false;
-        if (seatsField.getText() == null || seatsField.getText().trim().isEmpty()){
+        if (seatsField.getText() == null || seatsField.getText().trim().isEmpty()) {
             input = true;
         }
         return input;
     }
 
-    public boolean checkemptycomponenttype(){
+    public boolean checkemptycomponenttype() {
         boolean empty = false;
 
         System.out.println(componentfieldtype.getSelectionModel().getSelectedItem().toString());
-        if (componentfieldtype.getSelectionModel().getSelectedItem().toString() == null || componentfieldtype.getSelectionModel().getSelectedItem().toString().trim().isEmpty()){
+        if (componentfieldtype.getSelectionModel().getSelectedItem().toString() == null || componentfieldtype.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) {
             empty = true;
         }
 
         return empty;
     }
 
-    public boolean checkTrainName(){
+    public boolean checkTrainName() {
         boolean exist = false;
 
-        if(ServiceProvider.getTrainService().getTrainByName(trainNameField.getText()) == null){
+        if (ServiceProvider.getTrainService().getTrainByName(trainNameField.getText()) == null) {
             exist = true;
         }
         return exist;
     }
 
-    public boolean checkComponentCode(){
+    public boolean checkComponentCode() {
         boolean exist = true;
 
-        if(ServiceProvider.getTrainService().getTrainByName(allComponents.getSelectionModel().getSelectedItem().toString()) == null){
+        if (ServiceProvider.getTrainService().getTrainByName(allComponents.getSelectionModel().getSelectedItem().toString()) == null) {
             exist = false;
         }
         return exist;
     }
 
-    public boolean checkComponentType(){
+    public boolean checkComponentType() {
         boolean exist = true;
-        if(ServiceProvider.getComponentTypeService().getComponentTypeByName(componentfieldtype.getSelectionModel().getSelectedItem().toString()) == null){
+        if (ServiceProvider.getComponentTypeService().getComponentTypeByName(componentfieldtype.getSelectionModel().getSelectedItem().toString()) == null) {
             exist = false;
         }
         return exist;
     }
 
-    public void insertComponentType(){
+    public void insertComponentType() {
         if (checkemptycomponenttype()) {
             alertMessageNewTrain(1);
         } else {
-            if(!checkComponentType()) {
+            if (!checkComponentType()) {
                 ComponentType componentType = new ComponentType();
                 componentType.setName(componentfieldtype.getSelectionModel().getSelectedItem().toString());
                 ServiceProvider.getComponentTypeService().addComponentType(componentType);
@@ -324,7 +313,7 @@ public class GuiController {
         }
     }
 
-    public void insertComponent(){
+    public void insertComponent() {
         Component cpt = new Component();
         cpt.setTrain(ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()));
         cpt.setSeats(Integer.parseInt(seatsField.getText().toString()));
@@ -340,22 +329,16 @@ public class GuiController {
         } else {
             System.out.println("test");
             System.out.println(checkComponentCode());
-            if(!checkComponentCode()){
-                if(checkComponentType()){
+            if (!checkComponentCode()) {
+                if (checkComponentType()) {
                     insertComponent();
-                }
-                else{
+                } else {
                     insertComponentType();
                     insertComponent();
                 }
-            }
-            else{
+            } else {
                 alertMessageNewTrain(3);
             }
-            System.out.println("refresh pane pls");
-            System.out.println(componentTypeIds());
-            addElementsHbox();
-            System.out.println("jup!");
         }
         addElementsHbox();
     }
@@ -363,7 +346,7 @@ public class GuiController {
     @FXML
     private void switchGUI(ActionEvent event) throws IOException {
         Stage stage;
-        stage=(Stage) switchView.getScene().getWindow();
+        stage = (Stage) switchView.getScene().getWindow();
         //load up OTHER FXML document
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("commandgui.fxml"));

@@ -16,6 +16,7 @@ public abstract class AbstractDaoJpaImpl<T> implements BaseDAO<T> {
 
     @SuppressWarnings("unchecked")
     public AbstractDaoJpaImpl(EntityManager entityManager) {
+        entityManager.getEntityManagerFactory().getCache().evictAll();
         this.em = entityManager;
         Type t = getClass().getGenericSuperclass();
         ParameterizedType pt = (ParameterizedType) t;
