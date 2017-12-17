@@ -217,7 +217,7 @@ public class GuiController {
     }
 
     public void getComponents(){
-        allComponents.getItems().removeAll();
+        allComponents.getItems().clear();
         List<Component> components = ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()).getComponents();
         for(Component component : components){
             allComponents.getItems().add(component.getCode());
