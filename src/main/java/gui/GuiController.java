@@ -3,6 +3,7 @@ package gui;
 import entity.Component;
 import entity.ComponentType;
 import entity.Train;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,9 +18,13 @@ import javafx.stage.Stage;
 import models.ServiceProvider;
 import org.hibernate.boot.jaxb.SourceType;
 
+import javax.imageio.ImageIO;
 import javax.swing.plaf.synth.SynthTextAreaUI;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -220,10 +225,25 @@ public class GuiController {
 
     public void addElementsHbox(){
         hbox.getChildren().clear();
-        List<Image> imageViews = createImage(componentTypeIds());
-        for(Image image : imageViews){
-            hbox.getChildren().add(new ImageView(image));
+
+        List<Component> components = ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()).getComponents();
+
+        for (Component component : components) {
+
+            try {
+                InputStream in = new ByteArrayInputStream(component.getComponentType().getImage());
+                BufferedImage bufferedImageimage = ImageIO.read(in);
+                Image image = SwingFXUtils.toFXImage(bufferedImageimage, null);
+                hbox.getChildren().add(new ImageView(image));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+//        List<Image> imageViews = createImage(componentTypeIds());
+//        for(Image image : imageViews){
+//            hbox.getChildren().add(new ImageView(image));
+//        }
         scrollPane.setContent(hbox);
     }
 

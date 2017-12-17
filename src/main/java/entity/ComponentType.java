@@ -1,8 +1,11 @@
 package entity;
 
 
+import javafx.scene.image.Image;
+
 import javax.persistence.*;
 import java.lang.reflect.Field;
+import java.sql.Blob;
 import java.util.List;
 
 /**
@@ -19,6 +22,9 @@ public class ComponentType {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "image")
+    private byte[] image;
 
     public ComponentType() {}
 
@@ -43,4 +49,11 @@ public class ComponentType {
         this.name = name;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }

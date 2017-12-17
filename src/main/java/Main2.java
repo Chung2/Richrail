@@ -70,6 +70,8 @@ public class Main2 {
         ComponentType ct2 = ServiceProvider.getComponentTypeService().getComponentTypeById(2);
         ComponentType ct3 = ServiceProvider.getComponentTypeService().getComponentTypeById(3);
 
+        System.out.println(ct1.getImage());
+
 //        Train train = new Train();
 //        train.setName("Main2");
 //
@@ -99,14 +101,14 @@ public class Main2 {
 //
 //        ServiceProvider.getTrainService().addTrain(train);
 
-        Train train = ServiceProvider.getTrainService().getTrainById(1);
-        Component component = new Component();
-        component.setSeats(10);
-        component.setComponentType(ct3);
-        component.setCode("");
-        component.setTrain(train);
-
-        ServiceProvider.getComponentService().addComponent(component);
+//        Train train = ServiceProvider.getTrainService().getTrainById(1);
+//        Component component = new Component();
+//        component.setSeats(10);
+//        component.setComponentType(ct3);
+//        component.setCode("");
+//        component.setTrain(train);
+//
+//        ServiceProvider.getComponentService().addComponent(component);
 
 //        Component cpt = ServiceProvider.getComponentService().getComponentById(6);
 //        cpt.setSeats(200);
