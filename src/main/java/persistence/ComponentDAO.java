@@ -17,10 +17,6 @@ public interface ComponentDAO extends BaseDAO<Component> {
 
     List<Component> getAllByTrainId(int i);
     Component findByCode(String code);
-    // TODO delete getComponentById because it already exists in ABstractDaoJpaImpl bestaat (findById)
-//    Component getComponentById(int i);
-    // TODO maybe delete getComponentByPre (never used)
-    Component getComponentByPre(int i, int trainid);
-
+    void deleteById(int id);
 
 }

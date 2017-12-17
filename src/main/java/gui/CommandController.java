@@ -56,16 +56,22 @@ public class CommandController{
     public void updateStatusLogger() {
 
         String statusLogger = "";
-        List<Component> components = ServiceProvider.getComponentService().getAllComponents();
         List<Train> trains = ServiceProvider.getTrainService().getAllTrains();
+        List<Component> components = ServiceProvider.getComponentService().getAllComponents();
 
-        statusLogger += "trains (name) : (components_name) \n \n";
+        statusLogger += "trains [name] \n(component_name)-(component_name)-..... \n \n";
 
         for (Train train : trains) {
-            statusLogger += "(" + train.getName() + ")";
+            statusLogger += "[" + train.getName() + "]\n";
             for (Component traincomponent : train.getComponents()){
-                statusLogger += "-(" + traincomponent.getCode() + ")";
+                statusLogger += "(" + traincomponent.getCode() + ")-";
             }
+
+            // remove the "-" from the final component
+            if (!train.getComponents().isEmpty()) {
+                statusLogger = statusLogger.substring(0, (statusLogger.length() - 1));
+            }
+
             statusLogger += "\n";
         }
 
@@ -79,10 +85,6 @@ public class CommandController{
 
         this.statusLogger.setText(statusLogger);
 
-    }
-
-    public void addStatusLoggerMessage(String s) {
-        //this.statusLogger.setText(this.statusLogger.getText() + "\n" + s);
     }
 
     public void addCommandLoggerMessage(String s) {
@@ -99,8 +101,6 @@ public class CommandController{
 
         // set i to 1 if command is correct, else commandLogger will display "command not correct" if i = 0
         int i = 0;
-
-        addStatusLoggerMessage(input);
 
         switch (list.get(0)) {
             // create a new train or component
@@ -150,29 +150,41 @@ public class CommandController{
                                     }
                                 }
                                 component.setCode(list.get(2));
+                                System.out.println(component.getCode());
 
-                                // assign component type
-                                if (list.get(3).equals("type") && list.get(4) != null) {
-                                    ComponentType type = ServiceProvider.getComponentTypeService().getComponentTypeByName(list.get(4));
-                                    if (type != null) {
+                                try {
+                                    // assign component type
+                                    if (list.get(3).equals("type") && list.get(4) != null) {
+                                        ComponentType type = ServiceProvider.getComponentTypeService().getComponentTypeByName(list.get(4));
+                                        if (type != null) {
+                                            component.setComponentType(type);
+                                        } else {throw new Exception();}
+                                    } else if (list.get(5).equals("type") && list.get(6) != null) {
+                                        ComponentType type = ServiceProvider.getComponentTypeService().getComponentTypeByName(list.get(6));
+                                        if (type != null) {
+                                            component.setComponentType(type);
+                                        } else {throw new Exception();}
+                                    } else {
+                                        ComponentType type = ServiceProvider.getComponentTypeService().getComponentTypeByName("wagon");
                                         component.setComponentType(type);
-                                    } else throw new Exception();
-                                } else if (list.get(5).equals("type") && list.get(6) != null) {
-                                    ComponentType type = ServiceProvider.getComponentTypeService().getComponentTypeByName(list.get(6));
-                                    if (type != null) {
-                                        component.setComponentType(type);
-                                    } else throw new Exception();
-                                } else {
-                                    List<ComponentType> types = ServiceProvider.getComponentTypeService().getAllComponentTypes();
-                                    component.setComponentType(types.get(0));
+                                    }
+                                } catch (Exception e) {
+                                    ComponentType type = ServiceProvider.getComponentTypeService().getComponentTypeByName("wagon");
+                                    component.setComponentType(type);
                                 }
 
-                                // assign seats
-                                if (list.get(3).equals("numseats") && list.get(4) != null) {
-                                    component.setSeats(Integer.parseInt(list.get(4)));
-                                } else if (list.get(5).equals("numseats") && list.get(6) != null) {
-                                    component.setSeats(Integer.parseInt(list.get(6)));
-                                } else {
+                                System.out.println(component.getComponentType().getName());
+
+                                try {
+                                    // assign seats
+                                    if (list.get(3).equals("numseats") && list.get(4) != null) {
+                                        component.setSeats(Integer.parseInt(list.get(4)));
+                                    } else if (list.get(5).equals("numseats") && list.get(6) != null) {
+                                        component.setSeats(Integer.parseInt(list.get(6)));
+                                    } else {
+                                        component.setSeats(20);
+                                    }
+                                } catch (Exception e) {
                                     component.setSeats(20);
                                 }
 
@@ -235,7 +247,7 @@ public class CommandController{
                             throw new Exception();
                         }
                     } catch (Exception e) {
-                        addCommandLoggerMessage("componentType " + list.get(1) + " could not be created");
+                        addCommandLoggerMessage("component " + list.get(1) + " could not be added to " + list.get(4));
                     }
                     i = 1;
                 }
@@ -259,13 +271,13 @@ public class CommandController{
                                     for (Component c : ServiceProvider.getComponentService().getComponentsByTrainId(t.getId())) {
                                         result += c.getSeats();
                                     }
-                                    addCommandLoggerMessage("number of seats in train " + list.get(1) + ": " + result);
+                                    addCommandLoggerMessage("number of seats in train " + list.get(2) + ": " + result);
                                 } else {
                                     throw new Exception();
                                 }
                             }
                         } catch (Exception e) {
-                            addCommandLoggerMessage("seat number from train " + list.get(1) + " could not be counted");
+                            addCommandLoggerMessage("seat number from train " + list.get(2) + " could not be counted");
                         }
                         i = 1;
                         break;
@@ -280,14 +292,14 @@ public class CommandController{
                                 //Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(2)));
                                 Component c = ServiceProvider.getComponentService().getComponentByCode(list.get(2));
                                 if (c != null) {
-                                    addCommandLoggerMessage("number of seats in component " + list.get(1) + ": " + c.getSeats());
+                                    addCommandLoggerMessage("number of seats in component " + list.get(2) + ": " + c.getSeats());
                                 } else {
                                     throw new Exception();
                                 }
                             }
 
                         } catch (Exception e) {
-                            addCommandLoggerMessage("seat number from component " + list.get(1) + " could not be counted");
+                            addCommandLoggerMessage("seat number from component " + list.get(2) + " could not be counted");
                         }
                         i = 1;
                         break;
@@ -321,16 +333,10 @@ public class CommandController{
 
                         if (list.get(2) != null) {
                             try {
-                                // check whether id actually exist
-                                //TODO implement getComponentByCode()
-                                //Component c = ServiceProvider.getComponentService().getComponentById(Integer.parseInt(list.get(2)));
-                                Component c = ServiceProvider.getComponentService().getComponentByCode(list.get(2));
-                                if (c != null) {
-                                    ServiceProvider.getComponentService().deleteComponent(c);
-                                    addCommandLoggerMessage("component " + list.get(2) + " deleted");
-                                } else {
-                                    throw new Exception();
-                                }
+                                component = ServiceProvider.getComponentService().getComponentByCode(list.get(2));
+                                if (component == null) {throw new Exception();}
+                                ServiceProvider.getComponentService().deleteComponentById(component.getId());
+                                addCommandLoggerMessage("component " + list.get(2) + " deleted");
                             } catch (Exception e) {
                                 addCommandLoggerMessage("component " + list.get(2) + " does not exist");
                             }
@@ -356,6 +362,7 @@ public class CommandController{
 
                         if (c != null && t != null) {
                             c.setTrain(null);
+                            ServiceProvider.getComponentService().updateComponent(c);
                         } else {
                             throw new Exception();
                         }

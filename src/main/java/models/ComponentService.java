@@ -106,10 +106,26 @@ public class ComponentService {
 
     public void deleteComponent(Component cp) {
         try {
+
             ServiceProvider.getEntityManager().getTransaction().begin();
             comdao.delete(cp);
             ServiceProvider.getEntityManager().getTransaction().commit();
             Logging.writeLine("[DELETE] Deleting component ( ID :" + cp.getId() + " , CODE: " + cp.getCode() + ", SEATS: " + cp.getSeats() + " )" );
+        } catch (Exception e) {
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            Logging.writeLine(errors.toString());
+            ServiceProvider.getEntityManager().getTransaction().rollback();
+        }
+    }
+
+    public void deleteComponentById(int id){
+        try {
+
+            ServiceProvider.getEntityManager().getTransaction().begin();
+            comdao.deleteById(id);
+            ServiceProvider.getEntityManager().getTransaction().commit();
+            Logging.writeLine("[DELETE] Deleting component by ID :" + id);
         } catch (Exception e) {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));

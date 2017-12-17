@@ -20,9 +20,7 @@ public class Train {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "train")
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "train")
-//    @JoinColumn (name="train")
+    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "train", orphanRemoval = false)
     private List<Component> Components = new ArrayList<Component>();
 
     public Train() {
