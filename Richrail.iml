@@ -12,7 +12,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -63,7 +63,7 @@
     <orderEntry type="module-library">
       <library name="Maven: javafx-packager:javafx-packager:1.8.0_20">
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.8.0_121/lib/ant-javafx.jar!/" />
+          <root url="jar://C:/Program Files (x86)/Java/jdk1.8.0_121/lib/ant-javafx.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
