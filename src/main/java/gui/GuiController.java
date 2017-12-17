@@ -367,7 +367,7 @@ public class GuiController {
         if(!checkcomponentfield()){
             Component cpt = ServiceProvider.getComponentService().getComponentByCode(allComponents.getSelectionModel().getSelectedItem().toString());
             ServiceProvider.getComponentService().deleteComponentById(cpt.getId());
-            refresh();
+            getTrains();
         }
     }
 
