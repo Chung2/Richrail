@@ -168,6 +168,7 @@ public class GuiController {
     @FXML
     public void getTrains() {
         trainField.getItems().clear();
+
         List<Train> trainList = ServiceProvider.getTrainService().getAllTrains();
         for (Train train : trainList) {
             trainField.getItems().add(train.getName());
@@ -176,10 +177,13 @@ public class GuiController {
 
     }
 
-    public void addElementsHbox() {
+    public void addElementsHbox(){
 
         hbox.getChildren().clear();
-        List<Component> components = ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()).getComponents();
+        List<Component> components = new ArrayList<Component>();
+        int id = ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()).getId();
+        components = ServiceProvider.getComponentService().getComponentsByTrainId(id);
+
         for (Component component : components) {
 
             try {
@@ -207,9 +211,13 @@ public class GuiController {
 
     public void getComponents() {
         allComponents.getItems().clear();
-        List<Component> components = ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()).getComponents();
+        List<Component> components = new ArrayList<>();
+        int id = ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()).getId();
+        components = ServiceProvider.getComponentService().getComponentsByTrainId(id);
+
         for (Component component : components) {
             allComponents.getItems().add(component.getCode());
+            System.out.println(component.getCode());
         }
         allComponents.getSelectionModel().selectFirst();
     }
@@ -235,6 +243,12 @@ public class GuiController {
                 alertMessageNewTrain(2);
             }
         }
+    }
+
+    public void refresh(){
+        allComponents.getItems().clear();
+        seatsField.clear();
+        getComponents();
     }
 
 
@@ -266,7 +280,6 @@ public class GuiController {
     public boolean checkemptycomponenttype() {
         boolean empty = false;
 
-        System.out.println(componentfieldtype.getSelectionModel().getSelectedItem().toString());
         if (componentfieldtype.getSelectionModel().getSelectedItem().toString() == null || componentfieldtype.getSelectionModel().getSelectedItem().toString().trim().isEmpty()) {
             empty = true;
         }
@@ -285,8 +298,7 @@ public class GuiController {
 
     public boolean checkComponentCode() {
         boolean exist = true;
-
-        if (ServiceProvider.getTrainService().getTrainByName(allComponents.getSelectionModel().getSelectedItem().toString()) == null) {
+        if (ServiceProvider.getComponentService().getComponentByCode(allComponents.getSelectionModel().getSelectedItem().toString()) == null) {
             exist = false;
         }
         return exist;
@@ -314,10 +326,13 @@ public class GuiController {
     }
 
     public void insertComponent() {
+        String name = componentfieldtype.getSelectionModel().getSelectedItem().toString();
+        ComponentType cpttype = ServiceProvider.getComponentTypeService().getComponentTypeByName(name);
+
         Component cpt = new Component();
         cpt.setTrain(ServiceProvider.getTrainService().getTrainByName(selectedTrain.getText()));
         cpt.setSeats(Integer.parseInt(seatsField.getText().toString()));
-        cpt.setComponentType(ServiceProvider.getComponentTypeService().getComponentTypeByName(componentfieldtype.getSelectionModel().getSelectedItem().toString()));
+        cpt.setComponentType(cpttype);
         cpt.setCode(allComponents.getSelectionModel().getSelectedItem().toString());
         ServiceProvider.getComponentService().addComponent(cpt);
     }
@@ -327,8 +342,6 @@ public class GuiController {
         if (checkcomponentfield() || checkemptyfieldseats()) {
             alertMessageNewTrain(5);
         } else {
-            System.out.println("test");
-            System.out.println(checkComponentCode());
             if (!checkComponentCode()) {
                 if (checkComponentType()) {
                     insertComponent();
@@ -339,8 +352,23 @@ public class GuiController {
             } else {
                 alertMessageNewTrain(3);
             }
+            refresh();
+            addElementsHbox();
         }
-        addElementsHbox();
+    }
+
+    public void deleteTrain(){
+        Train train = ServiceProvider.getTrainService().getTrainByName(trainField.getSelectionModel().getSelectedItem().toString());
+        ServiceProvider.getTrainService().deleteTrain(train);
+        refresh();
+    }
+
+    public void deleteComponent(){
+        if(!checkcomponentfield()){
+            Component cpt = ServiceProvider.getComponentService().getComponentByCode(allComponents.getSelectionModel().getSelectedItem().toString());
+            ServiceProvider.getComponentService().deleteComponentById(cpt.getId());
+            refresh();
+        }
     }
 
     @FXML
